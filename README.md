@@ -1,6 +1,6 @@
 # orwell_basics
-practice with tidyverse tools using some of production data
 
-This piece of code is to hone tidyverse tools on some real raw produciton data from Orwell site
+with the fun_explore branch I'm trying to learn integration of Rstudio and git
+my plan is to somehow get the orwell.R file imported into rstudio without me copying/pasting it
 
-The repo contains the csv file which contains the raw data and R file containing code
+Lets see if I shall success
