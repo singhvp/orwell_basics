@@ -76,9 +76,6 @@ ggplot(data=operator, mapping = aes(x = monthnum, y = total_qty)) +
 
 # can we see how employee output changes over months? 
 # To make below work, we need a different tibble
-# ggplot(data=operator, mapping = aes(x = monthnum, y = total_qty)) +
-#   geom_smooth() + facet_wrap(~employee)
-
 
 op <- orwell %>%
   group_by(monthnum, employee) %>%
@@ -87,9 +84,9 @@ op <- orwell %>%
     total_scrap = sum(scrap, na.rm=TRUE)
   )
 
-# the bitch was converting monthnum or month from factor into numeric value
+# the issue was converting monthnum or month from factor into numeric value
 # to make geom_smooth work
-# THIS IS IMPORTANT TO REMEMBER
+# THIS IS IMPORTANT TO REMEMBER for geom_smooth()
 # op$monthnum <- as.numeric(op$monthnum)
 
 ggplot(data=op, mapping = aes(x = monthnum, y = total_qty, color = employee)) + 
@@ -99,6 +96,10 @@ ggplot(data=op, mapping = aes(x = monthnum, y = total_qty, color = employee)) +
 ggplot(data=op, mapping = aes(x = monthnum, y = total_qty)) + 
   +   geom_point(aes(size = 0.5)) + facet_wrap(~employee)
 
+# Now I want to focus on high quantity materials only
+# so first I'll create a tibble containing materials 
+# with highest production order quantity 
+
 mat <- orwell %>%
   group_by(material) %>%
   summarise(
@@ -106,7 +107,7 @@ mat <- orwell %>%
     count = n()
   )
 
-# change the total_qty value to change number of materials selected
+# change the value of total_qty to change number of materials selected
 # I'm using 10,000 so I can focus on 67 materials only
 mat <- filter(mat, total_qty>=10000)
 
@@ -122,6 +123,3 @@ change <- orwell %>%
     total_machine_plan = sum(machine_plan, na.rm=TRUE),
     total_machine_actual = sum(machine_actual, na.rm=TRUE)
   )
-
-
-
